@@ -1,0 +1,12 @@
+{
+  "name": "gemini-cloud-bridge",
+  "version": "1.0.0",
+  "description": "24/7 Cloud Gateway for Manus and Codex",
+  "main": "gemini_gateway.js",
+  "scripts": {
+    "start": "node gemini_gateway.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
