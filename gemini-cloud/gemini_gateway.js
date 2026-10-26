@@ -6,10 +6,12 @@
 const express = require('express');
 const https = require('https');
 const app = express();
+app.use('/v1', require('./gateway-auth'));
 app.use(express.json({ limit: '50mb' }));
 
 const PORT = process.env.PORT || 10000;
-const API_KEY = "AIzaSyB9wvkHusvQz0B9o_q2p83lAZu_otMpwJ0";
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) throw new Error("GEMINI_API_KEY env var not set.");
 
 function apiCall(url, payload) {
   return new Promise((resolve, reject) => {
@@ -52,4 +54,6 @@ app.post('/v1/images/generations', async (req, res) => {
 // Basic check
 app.get('/', (req, res) => res.send("OpenAI Emulation Engine Online."));
 
-app.listen(PORT, () => console.log(`Gateway running on cloud port ${PORT}`));
+if (require.main === module) app.listen(PORT, () => console.log(`Gateway running on cloud port ${PORT}`));
+
+module.exports = app;
